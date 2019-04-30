@@ -25,8 +25,24 @@ async function getPhotoReference() {
   return PHOTO_REFERENCE;
 }
 
+// TODO: descの取得の仕方
+async function getData() {
+  const result = await getRandomResult();
+  const data = {
+    name: result.name,
+    openNow: result.opening_hours.open_now,
+    priceLevel: result.price_level,
+    rating: result.rating,
+    reference: result.reference,
+    photoReference: result.photos[0].photo_reference
+  };
+  console.log(data);
+  return data;
+}
+
 async function getImageUrl() {
-  const PHOTO_REFERENCE = await getPhotoReference();
+  const data = await getData();
+  const PHOTO_REFERENCE = data.photoReference;
   const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${PHOTO_REFERENCE}&key=${API_KEY}`;
   return url;
 }
