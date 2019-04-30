@@ -1,7 +1,10 @@
 import request from 'request';
-import API_KEY from 'config';
+import { API_KEY } from './config';
 
 var GMap, gmap;
+const lat = 49.2798287;
+const long = -123.1157398;
+const radius = 200;
 
 GMap = (function() {
   function GMap() {}
@@ -12,7 +15,7 @@ GMap = (function() {
     request.get(
       {
         uri:
-          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=43.059856,141.343081&radius=200&types=food&language=ja&key=' +
+          'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=,&radius=250&types=food&language=ja&key=' +
           API_KEY,
         json: true
       },
