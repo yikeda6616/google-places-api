@@ -19,13 +19,16 @@ async function getRandomResult() {
   return result;
 }
 
-// TODO: descの取得の仕方
 async function getDesc(name) {
   const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${name}&key=${API_KEY}`;
   const response = await axios.get(url);
   const desc = response.data.predictions[0].description;
-  console.log(desc);
   return desc;
+}
+
+async function getImageUrl(PHOTO_REFERENCE) {
+  const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${PHOTO_REFERENCE}&key=${API_KEY}`;
+  return url;
 }
 
 async function getData() {
@@ -35,25 +38,14 @@ async function getData() {
     openNow: result.opening_hours.open_now,
     priceLevel: result.price_level,
     rating: result.rating,
-    reference: result.reference,
-    photoReference: result.photos[0].photo_reference,
+    image: await getImageUrl(result.photos[0].photo_reference),
     desc: await getDesc(result.name)
   };
-  console.log(data);
   return data;
 }
 
-async function getImageUrl() {
-  const data = await getData();
-  const PHOTO_REFERENCE = data.photoReference;
-  const url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${PHOTO_REFERENCE}&key=${API_KEY}`;
-  return url;
-}
-
 async function outputtest() {
-  await getImageUrl().then(url => {
-    console.log(url);
-  });
+  await getData().then(data => console.log(data));
 }
 
 outputtest();
