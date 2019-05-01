@@ -19,12 +19,6 @@ async function getRandomResult() {
   return result;
 }
 
-async function getPhotoReference() {
-  const result = await getRandomResult();
-  const PHOTO_REFERENCE = result.photos[0].photo_reference;
-  return PHOTO_REFERENCE;
-}
-
 // TODO: descの取得の仕方
 async function getData() {
   const result = await getRandomResult();
