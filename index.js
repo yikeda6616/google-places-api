@@ -20,6 +20,14 @@ async function getRandomResult() {
 }
 
 // TODO: descの取得の仕方
+async function getDesc(name) {
+  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${name}&key=${API_KEY}`;
+  const response = await axios.get(url);
+  const desc = response.data.predictions[0].description;
+  console.log(desc);
+  return desc;
+}
+
 async function getData() {
   const result = await getRandomResult();
   const data = {
@@ -28,7 +36,8 @@ async function getData() {
     priceLevel: result.price_level,
     rating: result.rating,
     reference: result.reference,
-    photoReference: result.photos[0].photo_reference
+    photoReference: result.photos[0].photo_reference,
+    desc: await getDesc(result.name)
   };
   console.log(data);
   return data;
