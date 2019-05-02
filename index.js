@@ -43,6 +43,7 @@ async function getData() {
   const data = {
     name: result.name,
     openNow: result.opening_hours.open_now,
+    address: result.vicinity,
     priceLevel: result.price_level,
     rating: result.rating,
     image: await getImageUrl(result.photos[0].photo_reference),
