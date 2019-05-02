@@ -31,6 +31,13 @@ async function getImageUrl(PHOTO_REFERENCE) {
   return url;
 }
 
+async function getReview(placeId) {
+  const url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&fields=reviews&key=${API_KEY}`;
+  const response = await axios.get(url);
+  const review = response.data.result.reviews[0].text;
+  return review;
+}
+
 async function getData() {
   const result = await getRandomResult();
   const data = {
@@ -39,7 +46,8 @@ async function getData() {
     priceLevel: result.price_level,
     rating: result.rating,
     image: await getImageUrl(result.photos[0].photo_reference),
-    desc: await getDesc(result.name)
+    desc: await getDesc(result.name),
+    review: await getReview(result.place_id)
   };
   return data;
 }
